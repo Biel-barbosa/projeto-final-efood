@@ -4,7 +4,29 @@ import styled from 'styled-components'
 import { colors } from '../../styles/global'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import ProductModal from '../../components/ProductModal'
+
+const FaixaBege = styled.div`
+  width: 100vw;
+  min-width: 100vw;
+  height: 88px;
+  background: #FFEBD9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const TopBar = styled.div`
+  width: 100vw;
+  background: #ffe9d6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 18px;
+  color: ${colors.primary};
+  font-weight: bold;
+  letter-spacing: 2px;
+`
 
 const Container = styled.div`
   max-width: 1024px;
@@ -178,8 +200,6 @@ type Restaurant = {
 const RestaurantDetail: React.FC = () => {
   const { id } = useParams()
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
   useEffect(() => {
     fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
@@ -187,21 +207,25 @@ const RestaurantDetail: React.FC = () => {
       .then((data) => setRestaurant(data))
   }, [id])
 
-  const handleOpenModal = (product: Product) => {
-    setSelectedProduct(product)
-    setModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setModalOpen(false)
-    setSelectedProduct(null)
-  }
-
   if (!restaurant) return <div>Carregando...</div>
 
   return (
     <>
       <Header />
+      <FaixaBege />
+      <TopBar>sc-VILhF fRTEwk</TopBar>
+      <Container>
+        <ProductGrid>
+          {restaurant.cardapio.map((product) => (
+            <ProductCard key={product.id}>
+              <ProductImage src={product.foto} alt={product.nome} />
+              <ProductName>{product.nome}</ProductName>
+              <ProductDescription>{product.descricao}</ProductDescription>
+              <AddButton>Adicionar ao carrinho</AddButton>
+            </ProductCard>
+          ))}
+        </ProductGrid>
+      </Container>
       <Hero>
         <HeroImage src={restaurant.capa} alt={restaurant.titulo} />
         <HeroOverlay />
@@ -213,25 +237,6 @@ const RestaurantDetail: React.FC = () => {
           <RestaurantName>{restaurant.titulo}</RestaurantName>
         </HeroContent>
       </Hero>
-      <Container>
-        <ProductGrid>
-          {restaurant.cardapio.map((product) => (
-            <ProductCard key={product.id}>
-              <ProductImage src={product.foto} alt={product.nome} />
-              <ProductName>{product.nome}</ProductName>
-              <ProductDescription>{product.descricao}</ProductDescription>
-              <AddButton onClick={() => handleOpenModal(product)}>
-                Adicionar ao carrinho
-              </AddButton>
-            </ProductCard>
-          ))}
-        </ProductGrid>
-      </Container>
-      <ProductModal
-        isOpen={modalOpen}
-        onClose={handleCloseModal}
-        product={selectedProduct || { foto: '', nome: '', descricao: '', porcao: '', preco: 0 }}
-      />
       <Footer />
     </>
   )

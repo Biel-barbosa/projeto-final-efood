@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { colors } from '../../styles/global'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import ProductModal from '../../components/ProductModal'
 
 const Container = styled.div`
   max-width: 1024px;
@@ -178,24 +177,12 @@ type Restaurant = {
 const RestaurantDetail: React.FC = () => {
   const { id } = useParams()
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
   useEffect(() => {
     fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
       .then((res) => res.json())
       .then((data) => setRestaurant(data))
   }, [id])
-
-  const handleOpenModal = (product: Product) => {
-    setSelectedProduct(product)
-    setModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setModalOpen(false)
-    setSelectedProduct(null)
-  }
 
   if (!restaurant) return <div>Carregando...</div>
 
@@ -220,18 +207,11 @@ const RestaurantDetail: React.FC = () => {
               <ProductImage src={product.foto} alt={product.nome} />
               <ProductName>{product.nome}</ProductName>
               <ProductDescription>{product.descricao}</ProductDescription>
-              <AddButton onClick={() => handleOpenModal(product)}>
-                Adicionar ao carrinho
-              </AddButton>
+              <AddButton>Adicionar ao carrinho</AddButton>
             </ProductCard>
           ))}
         </ProductGrid>
       </Container>
-      <ProductModal
-        isOpen={modalOpen}
-        onClose={handleCloseModal}
-        product={selectedProduct || { foto: '', nome: '', descricao: '', porcao: '', preco: 0 }}
-      />
       <Footer />
     </>
   )
