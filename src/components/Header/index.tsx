@@ -4,9 +4,9 @@ import { colors } from '../../styles/global'
 import { Link } from 'react-router-dom'
 
 const HeaderContainer = styled.header`
-  width: 100%;
-  background: ${colors.secondary};
+  background-color: ${colors.secondary};
   padding: 40px 0;
+  text-align: center;
 `
 
 const Content = styled.div`
@@ -18,36 +18,31 @@ const Content = styled.div`
   justify-content: space-between;
 `
 
-const Logo = styled(Link)`
+const NavLink = styled(Link)`
+  color: ${colors.primary};
+  font-size: 18px;
+  font-weight: 900;
   text-decoration: none;
-  display: flex;
-  align-items: center;
 `
 
-const LogoImage = styled.img`
+const Logo = styled.img`
   height: 57px;
 `
 
 const CartButton = styled(Link)`
-  text-decoration: none;
   color: ${colors.primary};
   font-size: 18px;
   font-weight: 900;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  text-decoration: none;
 `
 
 const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <Content>
-        <Logo to="/">
-          <LogoImage src="/logo.png" alt="efood" />
-        </Logo>
-        <CartButton to="/carrinho">
-          <span>0 - produto(s)</span>
-        </CartButton>
+        <NavLink to="/">Restaurantes</NavLink>
+        <Logo src="/logo.png" alt="efood" />
+        <CartButton to="/carrinho">0 produto(s) no carrinho</CartButton>
       </Content>
     </HeaderContainer>
   )

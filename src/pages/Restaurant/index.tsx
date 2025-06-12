@@ -8,86 +8,25 @@ import ProductModal from '../../components/ProductModal'
 
 const Container = styled.div`
   max-width: 1024px;
-  margin: 40px auto 0 auto;
+  margin: 0 auto;
   padding: 0 24px;
 `
 
-const ProductGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-top: 40px;
-  margin-bottom: 80px;
-`
-
-const ProductCard = styled.div`
-  background: ${colors.secondary};
-  border: 1px solid ${colors.primary};
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-`
-
-const ProductImage = styled.img`
-  width: 100%;
-  max-width: 200px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 16px;
-`
-
-const ProductName = styled.h2`
-  color: ${colors.primary};
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-`
-
-const ProductDescription = styled.p`
-  color: ${colors.primary};
-  font-size: 14px;
-  margin-bottom: 16px;
-`
-
-const AddButton = styled.button`
-  background: ${colors.primary};
-  color: ${colors.secondary};
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s;
-  &:hover {
-    background: #c94d4d;
-  }
-`
-
 const Hero = styled.div`
-  width: 100vw;
-  min-width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  width: 100%;
+  height: 280px;
   position: relative;
   background: ${colors.secondary};
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
-  height: 400px;
   overflow: hidden;
 `
 
 const HeroImage = styled.img`
-  width: 100vw;
-  height: 400px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -99,61 +38,94 @@ const HeroOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 400px;
-  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   z-index: 2;
 `
 
 const HeroContent = styled.div`
   position: relative;
   z-index: 3;
-  text-align: center;
-  width: 100vw;
-  padding: 0;
+  width: 100%;
+  padding: 24px 24px 24px 170px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: flex-start;
+  justify-content: space-between;
   height: 100%;
-  gap: 16px;
-  margin-bottom: 2vw;
 `
 
-const HeroTags = styled.div`
-  display: flex;
-  gap: 12px;
-  margin-top: 120px;
-  margin-bottom: 8px;
-`
-
-const Category = styled.span`
-  background: ${colors.primary};
+const RestaurantType = styled.span`
   color: ${colors.secondary};
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 6px 18px;
-  letter-spacing: 1px;
-`
-
-const Highlight = styled.span`
-  background: ${colors.secondary};
-  color: ${colors.primary};
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 6px 18px;
-  letter-spacing: 1px;
+  font-size: 32px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
 `
 
 const RestaurantName = styled.h1`
-  color: #fff;
-  font-size: 40px;
+  color: ${colors.secondary};
+  font-size: 32px;
   font-weight: 900;
   margin: 0;
   text-shadow: 0 2px 16px rgba(0,0,0,0.7);
-  letter-spacing: 1px;
+`
+
+const ProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+  margin-bottom: 80px;
+`
+
+const ProductCard = styled.div`
+  background: #E66767;
+  border: 1px solid #E66767;
+  padding: 8px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`
+
+const ProductImage = styled.img`
+  width: 304px;
+  height: 167px;
+  object-fit: cover;
+  margin-bottom: 8px;
+`
+
+const ProductName = styled.h2`
+  color: #FFEBD9;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+`
+
+const ProductDescription = styled.p`
+  color: #FFEBD9;
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  flex: 1;
+`
+
+const AddButton = styled.button`
+  background: #FFEBD9;
+  color: #E66767;
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+  margin-top: auto;
+  &:hover {
+    background: #FFEBD9;
+    opacity: 0.9;
+  }
 `
 
 type Product = {
@@ -206,10 +178,7 @@ const RestaurantDetail: React.FC = () => {
         <HeroImage src={restaurant.capa} alt={restaurant.titulo} />
         <HeroOverlay />
         <HeroContent>
-          <HeroTags>
-            <Category>{restaurant.tipo}</Category>
-            <Highlight>{restaurant.avaliacao} ★</Highlight>
-          </HeroTags>
+          <RestaurantType>{restaurant.tipo}</RestaurantType>
           <RestaurantName>{restaurant.titulo}</RestaurantName>
         </HeroContent>
       </Hero>
@@ -237,4 +206,4 @@ const RestaurantDetail: React.FC = () => {
   )
 }
 
-export default RestaurantDetail 
+export default RestaurantDetail
