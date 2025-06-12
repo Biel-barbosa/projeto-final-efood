@@ -15,6 +15,7 @@ type Props = {
 const Card = styled(Link)`
   background-color: ${colors.white};
   border: 1px solid ${colors.primary};
+  border-radius: 8px;
   overflow: hidden;
   width: 100%;
   max-width: 472px;
@@ -27,27 +28,10 @@ const Card = styled(Link)`
   }
 `
 
-const ImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 217px;
-`
-
 const CardImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 217px;
   object-fit: cover;
-`
-
-const RestaurantType = styled.span`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background-color: ${colors.primary};
-  color: ${colors.secondary};
-  font-size: 12px;
-  font-weight: bold;
-  padding: 4px 6px;
 `
 
 const CardContent = styled.div`
@@ -75,32 +59,25 @@ const CardRating = styled.div`
   color: ${colors.primary};
 `
 
-const StarIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`
-
 const CardDescription = styled.p`
   font-size: 14px;
   color: ${colors.primary};
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   line-height: 1.5;
 `
 
-const CardFooter = styled.div`
+const CardInfos = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  gap: 8px;
 `
 
-const SaibaMais = styled.button`
+const CardInfo = styled.span`
   background-color: ${colors.primary};
   color: ${colors.secondary};
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   padding: 4px 6px;
-  border: none;
-  cursor: pointer;
+  border-radius: 4px;
 `
 
 const RestaurantCard: React.FC<Props> = ({
@@ -113,21 +90,20 @@ const RestaurantCard: React.FC<Props> = ({
 }) => {
   return (
     <Card to={`/restaurante/${id}`}>
-      <ImageContainer>
-        <CardImage src={image} alt={title} />
-        <RestaurantType>{infos[0]}</RestaurantType>
-      </ImageContainer>
+      <CardImage src={image} alt={title} />
       <CardContent>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <CardRating>
-            {rating} <StarIcon src="/estrela.png" alt="Estrela" />
+            {rating} <span>★</span>
           </CardRating>
         </CardHeader>
         <CardDescription>{description}</CardDescription>
-        <CardFooter>
-          <SaibaMais>Saiba mais</SaibaMais>
-        </CardFooter>
+        <CardInfos>
+          {infos.map((info) => (
+            <CardInfo key={info}>{info}</CardInfo>
+          ))}
+        </CardInfos>
       </CardContent>
     </Card>
   )

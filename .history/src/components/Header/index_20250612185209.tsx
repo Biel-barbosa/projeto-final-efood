@@ -20,12 +20,12 @@ const Content = styled.div`
 
 const Logo = styled(Link)`
   text-decoration: none;
+  color: ${colors.primary};
+  font-size: 18px;
+  font-weight: 900;
   display: flex;
   align-items: center;
-`
-
-const LogoImage = styled.img`
-  height: 57px;
+  gap: 8px;
 `
 
 const CartButton = styled(Link)`
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <Content>
         <Logo to="/">
-          <LogoImage src="/logo.png" alt="efood" />
+          <span>efood</span>
         </Logo>
         <CartButton to="/carrinho">
           <span>0 - produto(s)</span>

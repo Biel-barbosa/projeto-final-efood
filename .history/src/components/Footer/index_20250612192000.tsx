@@ -14,9 +14,25 @@ const FooterContent = styled.div`
   padding: 0 24px;
 `
 
-const FooterLogo = styled.img`
-  height: 57px;
+const FooterLogo = styled.div`
+  color: ${colors.primary};
+  font-size: 18px;
+  font-weight: 900;
   margin-bottom: 32px;
+`
+
+const FooterLinks = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px;
+`
+
+const FooterLink = styled.a`
+  color: ${colors.primary};
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
 `
 
 const FooterSocial = styled.div`
@@ -26,9 +42,11 @@ const FooterSocial = styled.div`
   margin-bottom: 32px;
 `
 
-const SocialIcon = styled.img`
-  width: 24px;
-  height: 24px;
+const SocialLink = styled.a`
+  color: ${colors.primary};
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: bold;
 `
 
 const FooterText = styled.p`
@@ -43,11 +61,17 @@ const Footer = () => {
   return (
     <FooterContainer>
       <FooterContent>
-        <FooterLogo src="/logo.png" alt="efood" />
+        <FooterLogo>efood</FooterLogo>
+        <FooterLinks>
+          <FooterLink href="#">Sobre</FooterLink>
+          <FooterLink href="#">Categorias</FooterLink>
+          <FooterLink href="#">Entrega</FooterLink>
+          <FooterLink href="#">Contato</FooterLink>
+        </FooterLinks>
         <FooterSocial>
-          <SocialIcon src="/instagram-round-svgrepo-com (1) 1.svg" alt="Instagram" />
-          <SocialIcon src="/facebook-round-svgrepo-com 1.svg" alt="Facebook" />
-          <SocialIcon src="/twitter-2-svgrepo-com 1.svg" alt="Twitter" />
+          <SocialLink href="#" aria-label="Instagram">i</SocialLink>
+          <SocialLink href="#" aria-label="Facebook">f</SocialLink>
+          <SocialLink href="#" aria-label="Twitter">t</SocialLink>
         </FooterSocial>
         <FooterText>
           A efood é uma plataforma para divulgação de estabelecimentos, a responsabilidade pela entrega, qualidade dos produtos é toda do estabelecimento contratado.

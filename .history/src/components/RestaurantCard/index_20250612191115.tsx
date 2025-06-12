@@ -75,11 +75,6 @@ const CardRating = styled.div`
   color: ${colors.primary};
 `
 
-const StarIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`
-
 const CardDescription = styled.p`
   font-size: 14px;
   color: ${colors.primary};
@@ -121,7 +116,7 @@ const RestaurantCard: React.FC<Props> = ({
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <CardRating>
-            {rating} <StarIcon src="/estrela.png" alt="Estrela" />
+            {rating} <span>★</span>
           </CardRating>
         </CardHeader>
         <CardDescription>{description}</CardDescription>

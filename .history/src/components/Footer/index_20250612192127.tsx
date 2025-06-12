@@ -19,6 +19,20 @@ const FooterLogo = styled.img`
   margin-bottom: 32px;
 `
 
+const FooterLinks = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px;
+`
+
+const FooterLink = styled.a`
+  color: ${colors.primary};
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+`
+
 const FooterSocial = styled.div`
   display: flex;
   justify-content: center;
@@ -44,6 +58,12 @@ const Footer = () => {
     <FooterContainer>
       <FooterContent>
         <FooterLogo src="/logo.png" alt="efood" />
+        <FooterLinks>
+          <FooterLink href="#">Sobre</FooterLink>
+          <FooterLink href="#">Categorias</FooterLink>
+          <FooterLink href="#">Entrega</FooterLink>
+          <FooterLink href="#">Contato</FooterLink>
+        </FooterLinks>
         <FooterSocial>
           <SocialIcon src="/instagram-round-svgrepo-com (1) 1.svg" alt="Instagram" />
           <SocialIcon src="/facebook-round-svgrepo-com 1.svg" alt="Facebook" />

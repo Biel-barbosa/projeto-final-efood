@@ -1,19 +1,5 @@
 import { createGlobalStyle, DefaultTheme } from 'styled-components'
 
-declare module 'styled-components' {
-  export interface DefaultTheme {
-    colors: {
-      primary: string
-      secondary: string
-      white: string
-      black: string
-      gray: string
-      lightGray: string
-      background: string
-    }
-  }
-}
-
 export const theme: DefaultTheme = {
   colors: {
     primary: '#E66767',

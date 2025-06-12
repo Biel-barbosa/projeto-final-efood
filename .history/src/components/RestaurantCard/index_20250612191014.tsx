@@ -75,11 +75,6 @@ const CardRating = styled.div`
   color: ${colors.primary};
 `
 
-const StarIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`
-
 const CardDescription = styled.p`
   font-size: 14px;
   color: ${colors.primary};
@@ -93,14 +88,10 @@ const CardFooter = styled.div`
   align-items: center;
 `
 
-const SaibaMais = styled.button`
-  background-color: ${colors.primary};
-  color: ${colors.secondary};
+const SaibaMais = styled.span`
+  color: ${colors.primary};
   font-size: 14px;
   font-weight: bold;
-  padding: 4px 6px;
-  border: none;
-  cursor: pointer;
 `
 
 const RestaurantCard: React.FC<Props> = ({
@@ -121,7 +112,7 @@ const RestaurantCard: React.FC<Props> = ({
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <CardRating>
-            {rating} <StarIcon src="/estrela.png" alt="Estrela" />
+            {rating} <span>★</span>
           </CardRating>
         </CardHeader>
         <CardDescription>{description}</CardDescription>
