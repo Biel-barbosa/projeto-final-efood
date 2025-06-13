@@ -23,13 +23,6 @@ const Logo = styled.img`
   height: 57px;
 `
 
-const RestaurantLink = styled(Link)`
-  color: ${colors.primary};
-  font-size: 18px;
-  font-weight: 900;
-  text-decoration: none;
-`
-
 const CartButton = styled(Link)`
   color: ${colors.primary};
   font-size: 18px;
@@ -44,7 +37,6 @@ const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <Container>
-        <RestaurantLink to="/">Restaurantes</RestaurantLink>
         <Link to="/">
           <Logo src="/logo.png" alt="EFOOD" />
         </Link>

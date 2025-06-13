@@ -5,13 +5,16 @@ import RestaurantCard from '../../components/RestaurantCard'
 import Footer from '../../components/Footer'
 
 const Hero = styled.div`
-  background-image: url('/Hero.png');
+  background-image: url('/fundo.png');
   background-size: cover;
   background-position: center;
   height: 384px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
   position: relative;
   margin-bottom: 80px;
-  padding: 40px 0;
 `
 
 const HomeContainer = styled.div`

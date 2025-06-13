@@ -45,6 +45,7 @@ const CardContent = styled.div`
   padding: 8px;
   display: flex;
   flex-direction: column;
+  height: 100%;
   min-height: 200px;
 `
 
