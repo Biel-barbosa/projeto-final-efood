@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../../styles/global'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../store/cartSlice'
 
 const Modal = styled.div`
   position: fixed;
@@ -100,6 +102,7 @@ type Props = {
   isOpen: boolean
   onClose: () => void
   product: {
+    id: number
     foto: string
     nome: string
     descricao: string
@@ -109,7 +112,14 @@ type Props = {
 }
 
 const ProductModal: React.FC<Props> = ({ isOpen, onClose, product }) => {
+  const dispatch = useDispatch()
+
   if (!isOpen) return null
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product))
+    onClose()
+  }
 
   return (
     <Modal>
@@ -121,8 +131,8 @@ const ProductModal: React.FC<Props> = ({ isOpen, onClose, product }) => {
           <ModalDescription>{product.descricao}</ModalDescription>
           <ModalPortion>Serve: {product.porcao}</ModalPortion>
           <ModalPrice>R$ {product.preco.toFixed(2)}</ModalPrice>
-          <AddToCartButton onClick={onClose}>
-            Adicionar ao carrinho - R$ {product.preco.toFixed(2)}
+          <AddToCartButton onClick={handleAddToCart}>
+            Adicionar ao carrinho
           </AddToCartButton>
         </ModalInfo>
         <CloseButton onClick={onClose}>X</CloseButton>

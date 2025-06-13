@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { colors } from '../../styles/global'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import ProductModal from '../../components/ProductModal'
+import ProductModal from '../../components/ProductModal/index'
 
 const Container = styled.div`
   max-width: 1024px;
@@ -238,7 +238,7 @@ const RestaurantDetail: React.FC = () => {
       <ProductModal
         isOpen={modalOpen}
         onClose={handleCloseModal}
-        product={selectedProduct || { foto: '', nome: '', descricao: '', porcao: '', preco: 0 }}
+        product={selectedProduct || { id: 0, foto: '', nome: '', descricao: '', porcao: '', preco: 0 }}
       />
       <Footer />
     </>

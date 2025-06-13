@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { colors } from '../../styles/global'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../../store'
+import { openCart } from '../../store/cartSlice'
 
 const HeaderContainer = styled.header`
   background-image: url('/Vector.svg');
@@ -47,7 +50,7 @@ const RestaurantLink = styled(Link)`
   }
 `
 
-const CartButton = styled(Link)`
+const CartButton = styled.button`
   color: ${colors.primary};
   font-size: 18px;
   font-weight: bold;
@@ -55,9 +58,23 @@ const CartButton = styled(Link)`
   display: flex;
   align-items: center;
   gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
 `
 
 const Header: React.FC = () => {
+  const dispatch = useDispatch()
+  const { items } = useSelector((state: RootState) => state.cart)
+
+  const getTotalItems = () => {
+    return items.reduce((total, item) => total + item.quantidade, 0)
+  }
+
+  const getTotalPrice = () => {
+    return items.reduce((total, item) => total + item.preco * item.quantidade, 0)
+  }
+
   return (
     <HeaderContainer>
       <Container>
@@ -65,9 +82,9 @@ const Header: React.FC = () => {
         <Link to="/">
           <Logo src="/logo.png" alt="EFOOD" />
         </Link>
-        <CartButton to="/carrinho">
-          <span>0 - produto(s)</span>
-          <span>R$ 0,00</span>
+        <CartButton onClick={() => dispatch(openCart())}>
+          <span>{getTotalItems()} - produto(s)</span>
+          <span>R$ {getTotalPrice().toFixed(2)}</span>
         </CartButton>
       </Container>
     </HeaderContainer>
