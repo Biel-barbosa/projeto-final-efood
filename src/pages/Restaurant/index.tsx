@@ -10,11 +10,15 @@ const Container = styled.div`
   max-width: 1024px;
   margin: 0 auto;
   padding: 0 24px;
+
+  @media (max-width: 767px) {
+    padding: 0 16px;
+  }
 `
 
 const Hero = styled.div`
   width: 100%;
-  height: 280px;
+  height: 190px;
   position: relative;
   background: ${colors.secondary};
   display: flex;
@@ -22,11 +26,15 @@ const Hero = styled.div`
   align-items: flex-start;
   justify-content: flex-end;
   overflow: hidden;
+
+  @media (max-width: 767px) {
+    height: 190px;
+  }
 `
 
 const HeroImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 190px;
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -39,7 +47,7 @@ const HeroOverlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 190px;
   background: rgba(0, 0, 0, 0.5);
   z-index: 2;
 `
@@ -53,22 +61,34 @@ const HeroContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  height: 100%;
+  height: 190px;
+
+  @media (max-width: 767px) {
+    padding: 16px;
+  }
 `
 
 const RestaurantType = styled.span`
-  color: ${colors.secondary};
+  color: #fff;
   font-size: 32px;
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
 `
 
 const RestaurantName = styled.h1`
-  color: ${colors.secondary};
+  color: #fff;
   font-size: 32px;
   font-weight: 900;
   margin: 0;
   text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
 `
 
 const ProductGrid = styled.div`
@@ -77,6 +97,17 @@ const ProductGrid = styled.div`
   gap: 32px;
   margin-top: 56px;
   margin-bottom: 80px;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 32px;
+    margin-bottom: 40px;
+  }
 `
 
 const ProductCard = styled.div`
@@ -87,6 +118,10 @@ const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `
 
 const ProductImage = styled.img`
@@ -94,6 +129,10 @@ const ProductImage = styled.img`
   height: 167px;
   object-fit: cover;
   margin-bottom: 8px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `
 
 const ProductName = styled.h2`
