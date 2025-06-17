@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { colors } from '../../styles/global'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store'
-import { removeFromCart, closeCart } from '../../store/cartSlice'
+import { removeFromCart, closeCart, clearCart } from '../../store/cartSlice'
+import { openDeliveryForm, resetOrder } from '../../store/deliverySlice'
+import DeliveryForm from '../DeliveryForm'
+import OrderConfirmation from '../OrderConfirmation'
 
 const Overlay = styled.div<{ isOpen: boolean }>`
   position: fixed;
@@ -124,9 +127,22 @@ const EmptyCart = styled.p`
 const Cart: React.FC = () => {
     const dispatch = useDispatch()
     const { items, isOpen } = useSelector((state: RootState) => state.cart)
+    const { isDeliveryFormOpen, isOrderConfirmed } = useSelector((state: RootState) => state.delivery)
+
+    useEffect(() => {
+        if (isOrderConfirmed) {
+            dispatch(clearCart())
+            dispatch(resetOrder())
+        }
+    }, [isOrderConfirmed, dispatch])
 
     const getTotalPrice = () => {
         return items.reduce((total, item) => total + item.preco * item.quantidade, 0)
+    }
+
+    const handleCheckout = () => {
+        dispatch(closeCart())
+        dispatch(openDeliveryForm())
     }
 
     return (
@@ -152,16 +168,21 @@ const Cart: React.FC = () => {
                         <EmptyCart>O carrinho está vazio</EmptyCart>
                     )}
                 </CartItems>
+                
                 {items.length > 0 && (
                     <>
                         <CartTotal>
                             <span>Valor total</span>
                             <span>R$ {getTotalPrice().toFixed(2)}</span>
                         </CartTotal>
-                        <CheckoutButton>Continuar com a entrega</CheckoutButton>
+                        <CheckoutButton onClick={handleCheckout}>
+                            Continuar com a entrega
+                        </CheckoutButton>
                     </>
                 )}
             </CartContainer>
+            <DeliveryForm />
+            <OrderConfirmation />
         </>
     )
 }
