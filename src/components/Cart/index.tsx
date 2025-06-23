@@ -129,13 +129,6 @@ const Cart: React.FC = () => {
     const { items, isOpen } = useSelector((state: RootState) => state.cart)
     const { isDeliveryFormOpen, isOrderConfirmed } = useSelector((state: RootState) => state.delivery)
 
-    useEffect(() => {
-        if (isOrderConfirmed) {
-            dispatch(clearCart())
-            dispatch(resetOrder())
-        }
-    }, [isOrderConfirmed, dispatch])
-
     const getTotalPrice = () => {
         return items.reduce((total, item) => total + item.preco * item.quantidade, 0)
     }

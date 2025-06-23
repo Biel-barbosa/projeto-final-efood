@@ -150,6 +150,8 @@ const DeliveryForm: React.FC = () => {
   const [step, setStep] = useState<Step>('address')
   const [formData, setFormData] = useState<any>(initialForm)
   const total = items.reduce((acc, item) => acc + item.preco * item.quantidade, 0)
+  const [addressErrors, setAddressErrors] = useState<any>({})
+  const [paymentErrors, setPaymentErrors] = useState<any>({})
 
   if (!isDeliveryFormOpen) return null
 
@@ -196,13 +198,38 @@ const DeliveryForm: React.FC = () => {
     }
   }
 
+  const validateAddress = (data: any) => {
+    const errors: any = {}
+    if (!data.receiver || data.receiver.length < 3) errors.receiver = 'Informe o nome completo.'
+    if (!data.address.description || data.address.description.length < 3) errors.description = 'Endereço inválido.'
+    if (!data.address.city || data.address.city.length < 2) errors.city = 'Cidade inválida.'
+    if (!/^\d{8}$/.test(data.address.zipCode)) errors.zipCode = 'CEP deve ter 8 números.'
+    if (!/^\d+$/.test(data.address.number) || data.address.number.length < 1) errors.number = 'Número inválido.'
+    return errors
+  }
+
+  const validatePayment = (data: any) => {
+    const errors: any = {}
+    if (!data.payment.card.name || data.payment.card.name.length < 3) errors.name = 'Nome no cartão inválido.'
+    if (!/^\d{16}$/.test(data.payment.card.number)) errors.number = 'Número do cartão deve ter 16 dígitos.'
+    if (!/^\d{3}$/.test(data.payment.card.code)) errors.code = 'CVV deve ter 3 dígitos.'
+    if (!/^\d{1,2}$/.test(data.payment.card.expires.month) || +data.payment.card.expires.month < 1 || +data.payment.card.expires.month > 12) errors.month = 'Mês inválido.'
+    if (!/^\d{4}$/.test(data.payment.card.expires.year) || +data.payment.card.expires.year < 2024) errors.year = 'Ano inválido.'
+    return errors
+  }
+
   const handleAddressSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setStep('payment')
+    const errors = validateAddress(formData)
+    setAddressErrors(errors)
+    if (Object.keys(errors).length === 0) setStep('payment')
   }
 
   const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const errors = validatePayment(formData)
+    setPaymentErrors(errors)
+    if (Object.keys(errors).length > 0) return
     dispatch(setDeliveryInfo(formData))
     try {
       const response = await fetch('https://fake-api-tau.vercel.app/api/efood/checkout', {
@@ -219,10 +246,7 @@ const DeliveryForm: React.FC = () => {
       })
       if (response.ok) {
         const data = await response.json()
-        alert('Pedido finalizado!')
         dispatch(confirmOrder(data.orderId || 'Pedido'))
-      } else {
-        alert('Erro ao finalizar pedido!')
       }
     } catch {
       alert('Erro ao finalizar pedido!')
@@ -238,10 +262,13 @@ const DeliveryForm: React.FC = () => {
             <Title>Entrega</Title>
             <Label htmlFor="receiver">Quem irá receber</Label>
             <Input id="receiver" name="receiver" value={formData.receiver} onChange={handleChange} required />
+            {addressErrors.receiver && <span style={{color:'#fff',fontSize:12}}>{addressErrors.receiver}</span>}
             <Label htmlFor="address.description">Endereço</Label>
             <Input id="address.description" name="address.description" value={formData.address.description} onChange={handleChange} required />
+            {addressErrors.description && <span style={{color:'#fff',fontSize:12}}>{addressErrors.description}</span>}
             <Label htmlFor="address.city">Cidade</Label>
             <Input id="address.city" name="address.city" value={formData.address.city} onChange={handleChange} required />
+            {addressErrors.city && <span style={{color:'#fff',fontSize:12}}>{addressErrors.city}</span>}
             <Row>
               <div>
                 <Label htmlFor="address.zipCode">CEP</Label>
@@ -252,6 +279,8 @@ const DeliveryForm: React.FC = () => {
                 <Input id="address.number" name="address.number" value={formData.address.number} onChange={handleChange} required />
               </div>
             </Row>
+            {addressErrors.zipCode && <span style={{color:'#fff',fontSize:12}}>{addressErrors.zipCode}</span>}
+            {addressErrors.number && <span style={{color:'#fff',fontSize:12}}>{addressErrors.number}</span>}
             <Label htmlFor="address.complement">Complemento (opcional)</Label>
             <Input id="address.complement" name="address.complement" value={formData.address.complement} onChange={handleChange} />
             <Button type="submit">Continuar com o pagamento</Button>
@@ -265,6 +294,7 @@ const DeliveryForm: React.FC = () => {
             </PaymentTitle>
             <Label htmlFor="payment.card.name">Nome no cartão</Label>
             <Input id="payment.card.name" name="payment.card.name" value={formData.payment.card.name} onChange={handleChange} required />
+            {paymentErrors.name && <span style={{color:'#fff',fontSize:12}}>{paymentErrors.name}</span>}
             <Row>
               <div style={{ flex: 2 }}>
                 <Label htmlFor="payment.card.number">Número do cartão</Label>
@@ -275,6 +305,7 @@ const DeliveryForm: React.FC = () => {
                 <Input id="payment.card.code" name="payment.card.code" value={formData.payment.card.code} onChange={handleChange} required />
               </div>
             </Row>
+            {paymentErrors.number && <span style={{color:'#fff',fontSize:12}}>{paymentErrors.number}</span>}
             <Row>
               <div>
                 <Label htmlFor="payment.card.expires.month">Mês de vencimento</Label>
@@ -285,6 +316,8 @@ const DeliveryForm: React.FC = () => {
                 <Input id="payment.card.expires.year" name="payment.card.expires.year" value={formData.payment.card.expires.year} onChange={handleChange} required />
               </div>
             </Row>
+            {paymentErrors.month && <span style={{color:'#fff',fontSize:12}}>{paymentErrors.month}</span>}
+            {paymentErrors.year && <span style={{color:'#fff',fontSize:12}}>{paymentErrors.year}</span>}
             <ButtonGroup>
               <Button type="submit">Finalizar pagamento</Button>
               <SecondaryButton type="button" onClick={() => setStep('address')}>Voltar para a edição de endereço</SecondaryButton>
